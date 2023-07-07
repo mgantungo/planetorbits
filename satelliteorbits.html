@@ -42,7 +42,7 @@
       //sketching out the satellites
 
       function satelliteoutline(satellite, satelliteangle){
-        const {axismeasure} = satellite_details(satellite);
+        const {axismeasure} = satellite_details[satellite];
         //getting x and y satellite axis positions
         const x = midX + axismeasure * Math.cos(satelliteangle);
         const y = midY + axismeasure * Math.sin(satelliteangle);
@@ -53,7 +53,7 @@
         context.beginPath();
         context.arc(midX, midY, axismeasure, 0, 2 * Math.PI, false);
         context.lineWidth=2;
-        context.strokeStyle()="red";
+        context.strokeStyle="red";
         context.stroke();
 
 
@@ -76,7 +76,7 @@
         for(let satellite in satellite_details){
           const {rotationperiod} = satellite_details[satellite];
           //multiplying the period of the satellites by 1000  so as to obtain milliseconds for proper visual effect
-          const satelliteangle = (2 * Math.PI * Date.now()) / (period * 1000) ;
+          const satelliteangle = (2 * Math.PI * Date.now()) / (rotationperiod * 1000) ;
           //activating
           satelliteoutline(satellite, satelliteangle);
         }
