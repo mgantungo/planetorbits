@@ -11,9 +11,50 @@
 
       //defining my satellite colors to use in the simulation
       const satellite_color = {
-        ug_security = "";
-        ug_soil
+        ug_security : "yellow",
+        ug_weather : "red",
+        ug_soil : "green",
+        ug_season : "white"
+      };
+
+      //defining my satellite rotation axis  and period of rotation
+      const satellite_details = {
+        ug_security : {axismeasure:100, rotationperiod:19} ,
+        ug_weather : {axismeasure:300, rotationperiod:5},
+        ug_soil : {axismeasure:100, rotationperiod:15},
+        ug_season : {axismeasure:300, rotationperiod:9}
       }
+      // as the satellites rotate, they will be confined to the canvas as set in the HTML section.
+      //Below is the definition of canvas and respective context
+      const canvas = document.getElementById("universe");
+      const context = canvas.getContext("2d");
+
+      //the center /middle of the canvas whose id is the universe will be the axis of the satellites. 
+      //getting  X and Y axis positions
+
+      const midX = canvas.width / 2;
+      const midY = canvas.height / 2;
+
+      //sketching out the satellites
+
+      function satelliteoutline(satellite, satelliteangle){
+        const {axismeasure} = satellite_details(satellite);
+        const x = midX + axismeasure * Math.cos(satelliteangle);
+        const y = midY + axismeasure * Math.sin(satelliteangle);
+        //assuming the satellite orbit  lines to have a radius of 10point
+        const radius = 10;
+
+        //drawing the orbit lines below
+        context.beginPath();
+        context.arc(midX, midY, axismeasure, 0, 2 * Math.PI, false);
+        context.lineWidth=2;
+        context.strokeStyle()="red";
+        context.stroke();
+
+
+        //placing the satellites on the orbits
+      }
+      
 
       
       $(document).ready(function(){
@@ -26,6 +67,6 @@
     </script>
   </head>
   <body>
-    <canvas id="canvas" width="800" height="800"></canvas>
+    <canvas id="universe" width="800" height="800"></canvas>
   </body>
 </html>
