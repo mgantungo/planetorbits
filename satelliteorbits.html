@@ -30,7 +30,7 @@
       const context = canvas.getContext("2d");
 
       //the center /middle of the canvas whose id is the universe will be the axis of the satellites. 
-      //getting  X and Y axis positions
+      //getting  X and Y orbit axis positions
 
       const midX = canvas.width / 2;
       const midY = canvas.height / 2;
@@ -39,6 +39,7 @@
 
       function satelliteoutline(satellite, satelliteangle){
         const {axismeasure} = satellite_details(satellite);
+        //getting x and y satellite axis positions
         const x = midX + axismeasure * Math.cos(satelliteangle);
         const y = midY + axismeasure * Math.sin(satelliteangle);
         //assuming the satellite orbit  lines to have a radius of 10point
@@ -52,9 +53,31 @@
         context.stroke();
 
 
-        //placing the satellites on the orbits
+        //placing the satellites on the respective orbits
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        //painting the satellite with specified color in satellite_color above
+        context.fillStyle= satellite_color[satellite];
+        context.fill();
+        context.stroke();
+        context.strokeStyle = "red";
+        context.lineWidth=2;
+        
       }
-      
+      function animatesatellites(){
+        //clear any effects in the canvas whose id is universe
+        context.clearRect(0,0, canvas.width, canvas.height);
+
+        //loop through each of the satellites
+        for(let satellite in satellite_details){
+          const {rotationperiod} = satellite_details[satellite];
+          //multiplying the period of the satellites by 1000  so as to obtain milliseconds for proper visual effect
+          const satelliteangle = (2 * Math.PI * Date.now()) / (period * 1000) ;
+          //activating
+          satelliteoutline(satellite, satelliteangle);
+        }
+        requestAnimationFrame(animatesatellites);
+      }
 
       
       $(document).ready(function(){
@@ -62,6 +85,8 @@
         document.addEventListner("contextmenu", (e) =>{
           e.preventDefault();
         }, false);
+
+        animatesatellites();
       });
                         
     </script>
