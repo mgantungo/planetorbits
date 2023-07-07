@@ -7,6 +7,10 @@
         background-color: pink;
       }
     </style>
+  </head>
+</style>
+  <body>
+    <canvas id="universe" width="800" height="800"></canvas>
     <script>
 
       //defining my satellite colors to use in the simulation
@@ -78,20 +82,9 @@
         }
         requestAnimationFrame(animatesatellites);
       }
-
-      
-      $(document).ready(function(){
-        //preventing right click on the application 
-        document.addEventListner("contextmenu", (e) =>{
-          e.preventDefault();
-        }, false);
-
-        animatesatellites();
-      });
-                        
+    animatesatellites();
+                              
     </script>
-  </head>
-  <body>
-    <canvas id="universe" width="800" height="800"></canvas>
+  
   </body>
 </html>
